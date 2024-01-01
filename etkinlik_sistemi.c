@@ -5,7 +5,7 @@
 
 
 void veriyi_kaydet(struct EtkinlikKayitSistemi* sistem) {
-    FILE *dosya = fopen("etkinlik_kayit.txt", "w");
+    FILE *dosya = fopen("etkinlik_kayit.txt", "a+");
     if (dosya == NULL) {
         perror("Dosya acilirken hata olustu");
         exit(EXIT_FAILURE);
