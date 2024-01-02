@@ -28,4 +28,7 @@ int total_lines();
 void main_menu();
 
 void main_veriyi_kaydet();
+
+void etkinlik_ekleme();
+
 #endif /* ETKINLIK_SISTEMI_H */
