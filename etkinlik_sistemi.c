@@ -206,3 +206,32 @@ void main_menu() {
 //     return;
 //   }
 // }
+
+
+void etkinlik_ekleme() {
+    
+    char etkinlik_ismi[30];
+    printf("Ekleyeceginiz etkinligin ismini giriniz.\n");
+    scanf("%s",&etkinlik_ismi);
+
+    char etkinlikdosyasi[33];
+    strcpy(etkinlikdosyasi,etkinlik_ismi);
+    strcat(etkinlikdosyasi, ".txt");
+
+    FILE* dosya = fopen(etkinlikdosyasi, "a+");
+    if (dosya == NULL) {
+        perror("Dosya Acilirken Hata Olustu.\n");
+        exit(EXIT_FAILURE);
+    } else {
+        fclose(dosya);
+    }
+
+    FILE* dosya2 = fopen("etkinlik_listesi.txt", "a+");
+    if (dosya2 == NULL) {
+        perror("Etkinlik Listesi Acilirken Hata Olustu.\n");
+        exit(EXIT_FAILURE);
+    } else {
+        fprintf(dosya2, "%s\n", etkinlik_ismi);
+        fclose(dosya2); 
+    }
+}
