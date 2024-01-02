@@ -48,7 +48,7 @@ void show_menu(char *lineBuffer) {
   printf("|       3. Katilimci Listesi Goruntule        |\n");
   printf("|       0. Cikis                              |\n");
   printf("-----------------------------------------------\n");
-  printf("seciminiz yapin: ");
+  printf("\nSeciminizi yapin: ");
 }
 
 int total_lines() {
