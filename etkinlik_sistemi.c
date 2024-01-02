@@ -209,15 +209,17 @@ void main_menu() {
 
 
 void etkinlik_ekleme() {
-    
+    // etkinlik ismine alan tahsisi ve veri girişi.
     char etkinlik_ismi[30];
     printf("Ekleyeceginiz etkinligin ismini giriniz.\n");
     scanf("%s",&etkinlik_ismi);
 
+    // .txt uzantılı olması gereken etkinlik dosyası adının oluşturulması.
     char etkinlikdosyasi[33];
     strcpy(etkinlikdosyasi,etkinlik_ismi);
     strcat(etkinlikdosyasi, ".txt");
 
+    // Etkinliklere kayıt olan kişilerin verilerinin saklanması için açılacak dosyaların açılması.
     FILE* dosya = fopen(etkinlikdosyasi, "a+");
     if (dosya == NULL) {
         perror("Dosya Acilirken Hata Olustu.\n");
@@ -226,6 +228,7 @@ void etkinlik_ekleme() {
         fclose(dosya);
     }
 
+    // farklı etkinlik verilerinin depolanacağı etkinlik dosyasının açılması.  
     FILE* dosya2 = fopen("etkinlik_listesi.txt", "a+");
     if (dosya2 == NULL) {
         perror("Etkinlik Listesi Acilirken Hata Olustu.\n");
