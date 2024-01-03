@@ -1,16 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
 #include "etkinlik_sistemi.h"
 #include <stdbool.h>
 #include <stdio.h>
