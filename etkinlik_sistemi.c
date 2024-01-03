@@ -11,28 +11,29 @@
 void veriyi_kaydet(const struct Katilimci *sistem, char *file) {
   char event[30];
   strcpy(event, file);
-  strcat(event, ".txt");
-  FILE *dosya = fopen(event, "a+");
+  strcat(event, ".txt"); // açılacak dosyanın ismine .txt eklenmesi.
+  FILE *dosya = fopen(event, "a+"); // .txt uzantılı olan stringimizle dosya açılması.
   if (dosya == NULL) {
-    perror("Dosya acilirken hata olustu");
+    perror("Dosya acilirken hata olustu"); // klasik error kodu.
     exit(EXIT_FAILURE);
   }
-
+  // dosyaya girilen verilerin eklenmesi.
   fprintf(dosya, "%s,%s - %s\n", sistem->isim, sistem->soyisim, sistem->email);
 
-  fclose(dosya);
+  fclose(dosya); // dosyayı kapat. 
 }
 
 void kayit_ekle(struct Katilimci *sistem, const char *isim, const char *soyisim,
                 const char *email, char *file) {
 
-  struct Katilimci yeni_katilimci;
+  struct Katilimci yeni_katilimci; // kurulan yapıyla yeni değişken oluşturulması.
   strcpy(yeni_katilimci.isim, isim);
-  strcpy(yeni_katilimci.soyisim, soyisim);
+  strcpy(yeni_katilimci.soyisim, soyisim); // verilerin değişkenlere atanması.
   strcpy(yeni_katilimci.email, email);
 
   sistem = &yeni_katilimci;
-  veriyi_kaydet(sistem, file);
+  veriyi_kaydet(sistem, file); // üstte tanımlanılan dosyaya kaydetme fonksiyonu
+  
 }
 
 void show_menu(char *file) {
