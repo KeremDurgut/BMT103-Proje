@@ -18,9 +18,12 @@ int main() {
     case 2: {
       char etkinlik_listesi[30] = "etkinlik_listesi.txt";
       int islem;
+      
       etkinlik_liste_goruntuleme();
+      
       printf("\nHangi etkinlikle işlem yapmak istiyorsunuz: ");
       scanf("%d", &islem);
+      
       const char *filename = "etkinlik_listesi.txt";
       int lineNumber = islem;
       char file[256];
@@ -55,7 +58,7 @@ int main() {
       } else {
         printf("%d satir bulunmadi.\n", lineNumber);
       }
-      
+
       int secim;
           do {
               show_menu(file);
