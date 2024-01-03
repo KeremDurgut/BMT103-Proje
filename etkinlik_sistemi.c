@@ -67,19 +67,19 @@ int total_lines() {
   int current_line = 1;
   char c;
   do {
-    // read the next character from the file
+    // file dan sonraki karakteri okuyour
     c = fgetc(file);
 
     if (c == '\n')
       current_line++;
 
-    // continue until the special end of file value is returned from fgetc
+    // file in sonuna kadar devam ediyour
   } while (c != EOF);
 
-  // close the file since we are done with it
+
   fclose(file);
 
-  // print out the total number of lines 
+  //toplam satir sayisi veriyour
 
   return current_line;
 }
