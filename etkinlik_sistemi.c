@@ -95,18 +95,18 @@ void show_file(char *file_input) {
   file= fopen(event, "r");
 
   if (file != NULL) {
-    // read each character of the file one at a time until end of file (EOF) is
-    // returned to signify the end of the file, output each char to the console
+    // dosyanın sonuna kadar (EOF) dosyanın her karakterini birer birer okuyun.
+      // dosyanın sonunu belirtmek için geri döndü, her karakteri konsola çıktı olarak gönderdi
     char c;
     int i = 2;
 
     printf("%d ", 1);
     while ((c = fgetc(file)) != EOF) {
-      putchar(c); // Print each character
+      putchar(c); // her karakteri print yap
 
       if (c == '\n') {
 
-        printf("%d ", i); // Print the line number
+        printf("%d ", i); // satir numaraini print yap
         i++;
        
         
@@ -257,18 +257,18 @@ int copy_line_to_variable(const char *filename, int lineNumber,
 
   int currentLine = 1;
 
-  // Read lines from the file
+  // dosyadan satiri okuyor
   while (fgets(file_name, MAX_LINE_SIZE, file) != NULL) {
     if (currentLine == lineNumber) {
       fclose(file);
-      return 1; // Line found and copied to lineBuffer
+      return 1; // satir bulunca file'ye ekliyor
     }
 
     currentLine++;
   }
 
   fclose(file);
-  return 0; // Line not found or file couldn't be opened
+  return 0; //Satır bulunamadı veya dosya açılamadı
 }
 
 
