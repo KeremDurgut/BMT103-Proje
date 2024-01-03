@@ -6,74 +6,45 @@
 
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
+#define MAX_LINE_SIZE 256
 
-void veriyi_kaydet(const struct Katilimci *sistem) {
-  FILE *dosya = fopen("etkinlik_kayit.txt", "a+");
+void veriyi_kaydet(const struct Katilimci *sistem, char *lineBuffer) {
+  char event[30];
+  strcpy(event, lineBuffer);
+  strcat(event, ".txt");
+  FILE *dosya = fopen(event, "a+");
   if (dosya == NULL) {
     perror("Dosya acilirken hata olustu");
     exit(EXIT_FAILURE);
   }
 
-  // for (int i = 0; i < sistem->katilimci_sayisi; i++) {
-    fprintf(dosya, "\n%s,%s - %s", sistem->isim,
-            sistem->soyisim, sistem->email);
-  // }
+  fprintf(dosya, "%s,%s - %s\n", sistem->isim, sistem->soyisim, sistem->email);
 
   fclose(dosya);
 }
 
-void kayit_ekle(struct Katilimci *sistem, const char *isim,
-                const char *soyisim, const char *email) {
-  // if (sistem->katilimci_sayisi < 100) {
-    struct Katilimci yeni_katilimci;
-    strcpy(yeni_katilimci.isim, isim);
-    strcpy(yeni_katilimci.soyisim, soyisim);
-    strcpy(yeni_katilimci.email, email);
+void kayit_ekle(struct Katilimci *sistem, const char *isim, const char *soyisim,
+                const char *email, char *lineBuffer) {
 
-    sistem = &yeni_katilimci;
-    veriyi_kaydet(sistem);
-  // } else {
-  //   printf("Katilimci limitine ulastiniz!\n");
-  // }
+  struct Katilimci yeni_katilimci;
+  strcpy(yeni_katilimci.isim, isim);
+  strcpy(yeni_katilimci.soyisim, soyisim);
+  strcpy(yeni_katilimci.email, email);
+
+  sistem = &yeni_katilimci;
+  veriyi_kaydet(sistem, lineBuffer);
 }
 
-// void kayit_silme(struct Katilimci *sistem, const char *isim,
-//                  const char *soyisim) {
-//   int lines=total_lines();
-//   for (int i = 0; i < lines; i++) {
-//     if (strcmp(sistem->isim, isim) == 0 &&
-//         strcmp(sistem->soyisim, soyisim) == 0) {
-//       // Shift the elements to remove the canceled participant
-//       for (int j = i; j < lines- 1; j++) {
-//         sistem->katilimcilar[j] = sistem->katilimcilar[j + 1];
-//       }
-//       // sistem->katilimci_sayisi--;
-//       printf("Kayit iptal edildi.\n");
-//       veriyi_kaydet(sistem);
-//       return;
-//     }
-//   }
-
-//   printf("Katilimci bulunamadi.\n");
-// }
-
-// void katilimci_listesi_goruntule(const struct EtkinlikKayitSistemi *sistem) {
-//   printf("Katilimcilar Listesi:\n");
-//   for (int i = 0; i < sistem->katilimci_sayisi; i++) {
-//     printf("%d %s %s - %s\n", i + 1, sistem->katilimcilar[i].isim,
-//            sistem->katilimcilar[i].soyisim, sistem->katilimcilar[i].email);
-//   }
-// }
-
-void show_menu() {
+void show_menu(char *lineBuffer) {
   printf("\n-----------------------------------------------\n");
+  printf("|   Etkinlik ismi:  %s                        |\n", lineBuffer);
   printf("|   Etkinlik Kayit Sistemi Menu:              |\n");
   printf("|       1. Kayit Ekle                         |\n");
   printf("|       2. Kayit Iptal Et                     |\n");
   printf("|       3. Katilimci Listesi Goruntule        |\n");
   printf("|       0. Cikis                              |\n");
   printf("-----------------------------------------------\n");
-  printf("\nSeciminizi yapin: ");
+  printf("seciminiz yapin: ");
 }
 
 int total_lines() {
@@ -111,11 +82,14 @@ int total_lines() {
 }
 
 // lets use show function inplace of katilimci listesi goruntuleme
-void show() {
+void show(char *lineBuffer) {
   FILE *fh;
   int lines = total_lines();
+  char event[30];
+  strcpy(event, lineBuffer);
+  strcat(event, ".txt");
 
-  fh = fopen("etkinlik_kayit.txt", "r");
+  fh = fopen(event, "r");
 
   if (fh != NULL) {
     // read each character of the file one at a time until end of file (EOF) is
@@ -141,9 +115,15 @@ void show() {
   }
 }
 
-void numarayla_silme(struct Katilimci*sistem, int delete_line) {
+void numarayla_silme(int delete_line, char *lineBuffer) {
+
+  char event[30];
+  strcpy(event, lineBuffer);
+  strcat(event, ".txt");
+
   FILE *file, *temp;
-  char filename[FILENAME_SIZE] = "etkinlik_kayit.txt";
+  char filename[FILENAME_SIZE];
+  strcpy(filename, event);
   char temp_filename[FILENAME_SIZE];
 
   char buffer[MAX_LINE];
@@ -187,54 +167,189 @@ void numarayla_silme(struct Katilimci*sistem, int delete_line) {
   rename(temp_filename, filename);
 }
 
-void main_menu() {
-  printf("what do you want to do\n");
-  printf("1. create another etkinlik\n");
-  printf("2. make changes to the existing one");
-  // this is used at the end of the sentence 0/
+void etkinlik_ekleme() {
+
+  char etkinlik_ismi[30];
+  printf("Ekleyeceginiz etkinligin ismini giriniz.\n");
+  // scanf("%s",etkinlik_ismi);
+  fgets(etkinlik_ismi, sizeof(etkinlik_ismi), stdin);
+
+  char etkinlikdosyasi[33];
+  strcpy(etkinlikdosyasi, etkinlik_ismi);
+  strcat(etkinlikdosyasi, ".txt");
+
+  FILE *dosya = fopen(etkinlikdosyasi, "a+");
+  if (dosya == NULL) {
+    perror("Dosya Acilirken Hata Olustu.\n");
+    exit(EXIT_FAILURE);
+  } else {
+    fclose(dosya);
+  }
+
+  FILE *dosya2 = fopen("etkinlik_listesi.txt", "a+");
+  if (dosya2 == NULL) {
+    perror("Etkinlik Listesi Acilirken Hata Olustu.\n");
+    exit(EXIT_FAILURE);
+  } else {
+    fprintf(dosya2, "%s\n", etkinlik_ismi);
+    fclose(dosya2);
+  }
 }
 
-// void main_veriyi_kaydet(char *event) {
-//   // char event[100];
-//   printf("ente the name of the Event: ");
-//   scanf("%s",event);
-//   strcat(event,".txt");
-//   // printf(event);
-//   FILE *dosya = fopen(event, "a+");
-//   if (dosya == NULL) {
-//     perror("Dosya acilirken hata olustu");
-//     return;
-//   }
-// }
+// trial things
 
+void etkinlik_show(char *lineBuffer) {
+  FILE *fh;
+  int lines = total_lines();
+  char event[30];
+  strcpy(event, lineBuffer);
+  strcat(event, ".txt");
 
-void etkinlik_ekleme() {
-    // etkinlik ismine alan tahsisi ve veri girişi.
-    char etkinlik_ismi[30];
-    printf("Ekleyeceginiz etkinligin ismini giriniz.\n");
-    scanf("%s",&etkinlik_ismi);
+  fh = fopen(event, "r");
 
-    // .txt uzantılı olması gereken etkinlik dosyası adının oluşturulması.
-    char etkinlikdosyasi[33];
-    strcpy(etkinlikdosyasi,etkinlik_ismi);
-    strcat(etkinlikdosyasi, ".txt");
+  if (fh != NULL) {
+    // read each character of the file one at a time until end of file (EOF) is
+    // returned to signify the end of the file, output each char to the console
+    char c;
+    int i = 1;
 
-    // Etkinliklere kayıt olan kişilerin verilerinin saklanması için açılacak dosyaların açılması.
-    FILE* dosya = fopen(etkinlikdosyasi, "a+");
-    if (dosya == NULL) {
-        perror("Dosya Acilirken Hata Olustu.\n");
-        exit(EXIT_FAILURE);
-    } else {
-        fclose(dosya);
+    // printf("%d ", 1);
+    while ((c = fgetc(fh)) != EOF) {
+      putchar(c); // Print each character
+
+      if (c == '\n') {
+
+        printf("%d ", i); // Print the line number
+        i++;
+      }
     }
 
-    // farklı etkinlik verilerinin depolanacağı etkinlik dosyasının açılması.  
-    FILE* dosya2 = fopen("etkinlik_listesi.txt", "a+");
-    if (dosya2 == NULL) {
-        perror("Etkinlik Listesi Acilirken Hata Olustu.\n");
-        exit(EXIT_FAILURE);
-    } else {
-        fprintf(dosya2, "%s\n", etkinlik_ismi);
-        fclose(dosya2); 
+    fclose(fh);
+
+  } else {
+    printf("Error opening file.\n");
+  }
+}
+
+void ana_menu() {
+  int a;
+  printf("\n----------------------------------------------\n");
+  printf("|          Etkinlik Menu:                      |\n\n");
+  printf("|       1. Etkinlik Ekle                       |\n");
+  printf("|       2. Etkinlik Kaldir                     |\n");
+  printf("|       3. Etkinlik Listesi Goruntule          |\n");
+  printf("|       0. Cikis                               |\n");
+  printf("------------------------------------------------\n");
+  printf("seciminiz yapin: ");
+}
+
+void etkinlik_liste_goruntuleme() {
+  FILE *etkinlikler = fopen("etkinlik_listesi.txt", "r");
+
+  if (etkinlikler != NULL) {
+    char c;
+    int line_number = 2;
+    int char_position = 0;
+    printf("%d ", 1);
+
+    while ((c = fgetc(etkinlikler)) != EOF) {
+      putchar(c);
+
+      if (c == '\n') {
+        printf("%d ",
+               line_number); // Print the line number at the end of each line
+        line_number++;
+        char_position = 0; // Reset the character position for the new line
+      } else {
+        char_position++;
+      }
     }
+
+    fclose(etkinlikler);
+  } else {
+    printf("Error opening file.\n");
+  }
+}
+
+int copy_line_to_variable(const char *filename, int lineNumber,
+                          char *lineBuffer) {
+
+  FILE *file = fopen(filename, "r");
+
+  if (file == NULL) {
+    perror("Error opening file");
+    return 0;
+  }
+
+  int currentLine = 1;
+
+  // Read lines from the file
+  while (fgets(lineBuffer, MAX_LINE_SIZE, file) != NULL) {
+    if (currentLine == lineNumber) {
+      fclose(file);
+      return 1; // Line found and copied to lineBuffer
+    }
+
+    currentLine++;
+  }
+
+  fclose(file);
+  return 0; // Line not found or file couldn't be opened
+}
+
+void etkinlik_sil(char *lineBuffer) {
+  int ret;
+  char event[30];
+  strcpy(event, lineBuffer);
+  strcat(event, ".txt");
+
+  FILE *fp;
+  char filename[100];
+  strcpy(filename, event);
+
+  fp = fopen(filename, "w");
+
+  fprintf(fp, "%s", "This is tutorialspoint.com");
+  fclose(fp);
+
+  ret = remove(filename);
+
+  if (ret == 0) {
+    printf("File deleted successfully");
+  } else {
+    printf("Error: unable to delete the file");
+  }
+}
+
+// void etkinlik_ismi_sil()
+void delete_line(const char *filename, int line_number) {
+  FILE *file, *temp;
+  int current_line = 1;
+  char buffer[1024];
+
+  file = fopen(filename, "r");
+  temp = fopen("temp_file.txt", "w");
+
+  if (file == NULL || temp == NULL) {
+    perror("Error opening file");
+    return;
+  }
+
+  // Read each line from the file
+  while (fgets(buffer, sizeof(buffer), file) != NULL) {
+    // Skip the line to be deleted
+    if (current_line != line_number) {
+      fputs(buffer, temp);
+    }
+    current_line++;
+  }
+
+  fclose(file);
+  fclose(temp);
+
+  // Remove the original file
+  remove(filename);
+
+  // Rename the temporary file to the original filename
+  rename("temp_file.txt", filename);
 }
