@@ -26,7 +26,7 @@ int main() {
       char file[256];
 
       if (copy_line_to_variable(filename, lineNumber, file)) { 
-        
+
       } else {
         printf("girdiginiz etkinlik bulunmamaktadir.\n", lineNumber);
       }
@@ -43,7 +43,7 @@ int main() {
       printf("\n*********************************************\n");
       etkinlik_liste_goruntuleme();
       printf("\n*********************************************\n");
-      
+
       printf("\nHangi etkinlikle işlem yapmak istiyorsunuz:\n ");
       scanf("%d", &islem);
       const char *filename = "etkinlik_listesi.txt";
@@ -55,47 +55,49 @@ int main() {
       } else {
         printf("%d satir bulunmadi.\n", lineNumber);
       }
+      
       int secim;
-      do {
-        show_menu(file);
-        
-        scanf("%d", &secim);
+          do {
+              show_menu(file);
 
-        switch (secim) {
-        case 1: {
-          char isim[50], soyisim[50], email[100];
-          printf("Isim giriniz: ");
-          scanf("%49s", isim);
-          printf("soy isim giriniz: ");
-          scanf("%49s", soyisim);
-          printf("Email giriniz: ");
-          scanf("%99s", email);
-          kayit_ekle(&etkinlik_sistemi, isim, soyisim, email, file);
-          break;
-        }
+              scanf("%d", &secim);
 
-        case 2: {
+          switch (secim) {
+                case 1: {
+                       char isim[50], soyisim[50], email[100];
+                        printf("Isim giriniz: ");
+                         scanf("%49s", isim);
+                         printf("soy isim giriniz: ");
+                        scanf("%49s", soyisim);
+                         printf("Email giriniz: ");
+                         scanf("%99s", email);
+                         kayit_ekle(&etkinlik_sistemi, isim, soyisim, email, file);
+                          break;
+                                }
+
+                case 2: {
 
           // isim silmek icin index kullaniyouruz
-          int line_to_delete;
-          do {
-            printf("silmek istediginiz indeksi yazinia: ");
-            printf("Menu'ye geri dönmek için 0: ");
-            scanf("%d", &line_to_delete);
+                          int line_to_delete;
+                       do {
+                            printf("silmek istediginiz indeksi yaziniz ya da ");
+                            printf("Menu'ye geri dönmek için 0: ");
+                            scanf("%d", &line_to_delete);
 
-            numarayla_silme(line_to_delete, file);
-          } while (line_to_delete != 0);
+                             numarayla_silme(line_to_delete, file);
+                           } while (line_to_delete != 0);
 
-          break;
-        }
+                          break;
+                                   }
 
-        case 3:
-          printf("\n************************************\n");
-          show_file(file);
-          printf("\n************************************\n");
-          break;
+                 case 3:{ 
+                          printf("\n************************************\n\n");
+                          show_file(file);
+                          printf("\n\n************************************\n");
+                          break;
+                        } 
 
-       
+
         }
 
       } while (secim != 0);
