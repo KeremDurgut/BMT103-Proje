@@ -91,7 +91,7 @@ void show_file(char *file_input) {
   char event[30];
   strcpy(event, file_input);
   strcat(event, ".txt");
-
+  printf("*********************************\n);
   file= fopen(event, "r");
 
   if (file != NULL) {
@@ -114,7 +114,8 @@ void show_file(char *file_input) {
     }
 
     fclose(file);
-
+  printf("*********************************\n);
+    
   } else {
     printf("Error opening file.\n");
   }
