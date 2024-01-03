@@ -43,10 +43,7 @@ int main() {
 
     case 3: {
       int islem;
-      printf("\n*********************************************\n");
       etkinlik_liste_goruntuleme();
-      printf("\n*********************************************\n");
-
       printf("\nHangi etkinlikle işlem yapmak istiyorsunuz:\n ");
       scanf("%d", &islem);
       const char *filename = "etkinlik_listesi.txt";
@@ -94,9 +91,7 @@ int main() {
                                    }
 
                  case 3:{ 
-                          printf("\n************************************\n\n");
                           show_file(file);
-                          printf("\n\n************************************\n");
                           break;
                         } 
 
