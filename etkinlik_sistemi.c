@@ -18,7 +18,7 @@ void veriyi_kaydet(const struct Katilimci *sistem, char *file) {
     exit(EXIT_FAILURE);
   }
   // dosyaya girilen verilerin eklenmesi.
-  fprintf(dosya, "%s %s - %s\n", sistem->isim, sistem->soyisim, sistem->email);
+  fprintf(dosya, "%s,%s - %s\n", sistem->isim, sistem->soyisim, sistem->email);
 
   fclose(dosya);// dosyayı kapat. 
 }
@@ -67,31 +67,32 @@ int total_lines() {
   int current_line = 1;
   char c;
   do {
-    // file dan sonraki karakteri okuyour
+    // read the next character from the file
     c = fgetc(file);
 
     if (c == '\n')
       current_line++;
 
-    // file in sonuna kadar devam ediyour
+    // continue until the special end of file value is returned from fgetc
   } while (c != EOF);
 
-
+  // close the file since we are done with it
   fclose(file);
 
-  //toplam satir sayisi veriyour
+  // print out the total number of lines 
 
   return current_line;
 }
 
 // lets use show function inplace of katilimci listesi goruntuleme
 void show_file(char *file_input) {
+   printf("\n************************************\n\n");
   FILE *file;
   int lines = total_lines();
   char event[30];
   strcpy(event, file_input);
   strcat(event, ".txt");
-  printf("*********************************\n);
+
   file= fopen(event, "r");
 
   if (file != NULL) {
@@ -114,10 +115,10 @@ void show_file(char *file_input) {
     }
 
     fclose(file);
-  printf("*********************************\n);
-    
+     printf("\n************************************\n\n");
+
   } else {
-    printf("Error opening file.\n");
+    printf("Dosya acilirken hata olustu.\n");
   }
 }
 
@@ -180,6 +181,7 @@ void etkinlik_ekleme() {
   printf("Ekleyeceginiz etkinligin ismini giriniz: ");
   // scanf("%s",etkinlik_ismi);
   fgets(etkinlik_ismi, sizeof(etkinlik_ismi), stdin);
+  
 
   char etkinlikdosyasi[33];
   strcpy(etkinlikdosyasi, etkinlik_ismi);
