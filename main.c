@@ -8,7 +8,7 @@ int main() {
   do {
     ana_menu();
     scanf("%d", &choice);
-    getchar(); // Clear the newline from the buffer
+    getchar(); // yeni satiri bufferdan siliyor
 
     switch (choice) {
     case 1:
@@ -19,16 +19,16 @@ int main() {
       char etkinlik_listesi[30] = "etkinlik_listesi.txt";
       int islem;
       etkinlik_liste_goruntuleme();
-      printf("Hangi etkinlikle işlem yapmak istiyorsunuz: ");
+      printf("\nHangi etkinlikle işlem yapmak istiyorsunuz: ");
       scanf("%d", &islem);
       const char *filename = "etkinlik_listesi.txt";
       int lineNumber = islem;
       char file[256];
 
       if (copy_line_to_variable(filename, lineNumber, file)) { 
-        printf("Line %d: %s", lineNumber,file);
+        
       } else {
-        printf("Line %d not found or file couldn't be opened.\n", lineNumber);
+        printf("girdiginiz etkinlik bulunmamaktadir.\n", lineNumber);
       }
 
       etkinlik_sil(file);
@@ -40,8 +40,11 @@ int main() {
 
     case 3: {
       int islem;
+      printf("\n*********************************************\n");
       etkinlik_liste_goruntuleme();
-      printf("Hangi etkinlikle işlem yapmak istiyorsunuz: ");
+      printf("\n*********************************************\n");
+      
+      printf("\nHangi etkinlikle işlem yapmak istiyorsunuz:\n ");
       scanf("%d", &islem);
       const char *filename = "etkinlik_listesi.txt";
       int lineNumber = islem;
@@ -85,12 +88,12 @@ int main() {
         }
 
         case 3:
+          printf("\n************************************\n");
           show_file(file);
+          printf("\n************************************\n");
           break;
 
-        default:
-          printf("Invalid choice. Please choose again.\n");
-          break;
+       
         }
 
       } while (secim != 0);
@@ -103,7 +106,7 @@ int main() {
       break;
 
     default:
-      printf("Invalid choice. Please choose again.\n");
+      printf("hatali secim\n");
       break;
     }
   } while (choice != 0);
