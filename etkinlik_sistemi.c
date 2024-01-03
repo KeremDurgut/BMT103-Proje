@@ -1,3 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include "etkinlik_sistemi.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -119,23 +132,23 @@ void show_file(char *file_input) {
 void numarayla_silme(int delete_line, char *file_name) {
 
   char event[30];
-  strcpy(event, file_name);
+  strcpy(event, file_name); // açılacak dosya ismine .txt eklenmesi.
   strcat(event, ".txt");
 
   FILE *file, *temp;
-  char filename[FILENAME_SIZE];
-  strcpy(filename, event);
+  char filename[FILENAME_SIZE];  
+  strcpy(filename, event); // filname isminde dosya ismi tutan değişken yapılması.
   char temp_filename[FILENAME_SIZE];
 
-  char buffer[MAX_LINE];
+  char buffer[MAX_LINE]; 
 
-  strcpy(temp_filename, "temp____");
+  strcpy(temp_filename, "temp____");  
   strcat(temp_filename, filename);
 
   file = fopen(filename, "r");
   if (file == NULL) {
     perror("Error opening file for reading");
-    return;
+    return;                                        // jenerik dosya açma kontorlleri.
   }
 
   temp = fopen(temp_filename, "w");
@@ -147,25 +160,25 @@ void numarayla_silme(int delete_line, char *file_name) {
 
   bool keep_reading = true;
   int current_line = 1;
-
+                                         
   do {
     fgets(buffer, MAX_LINE, file);
 
     if (feof(file)) {
-      keep_reading = false;
+      keep_reading = false;        // dosya sonuna gelene kadar verilerin diğer dosyaya aktarımı
     } else if (current_line != delete_line) {
       fputs(buffer, temp);
     }
 
-    current_line++;
+    current_line++;                         
 
   } while (keep_reading);
 
-  fclose(file);
+  fclose(file);   // dosyaların kapanması
   fclose(temp);
 
-  remove(filename);
-  rename(temp_filename, filename);
+  remove(filename);  // içi boşaltılan ana dosyanın kapanması
+  rename(temp_filename, filename); // temp dosyasının kapanması
 }
 
 void etkinlik_ekleme() {
