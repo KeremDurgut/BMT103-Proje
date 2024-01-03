@@ -241,7 +241,6 @@ void etkinlik_show(char *lineBuffer) {
 }
 
 void ana_menu() {
-  int a;
   printf("\n----------------------------------------------\n");
   printf("|          Etkinlik Menu:                      |\n\n");
   printf("|       1. Etkinlik Ekle                       |\n");
