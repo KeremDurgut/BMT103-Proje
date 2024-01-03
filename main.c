@@ -51,33 +51,35 @@ int main() {
       char file[256];
 
       if (copy_line_to_variable(filename, lineNumber, file)) {
-        printf("Line %d: %s", lineNumber, file);
+        printf("%d: %s", lineNumber, file);
       } else {
-        printf("Line %d not found or file couldn't be opened.\n", lineNumber);
+        printf("%d satir bulunmadi.\n", lineNumber);
       }
       int secim;
       do {
         show_menu(file);
-        // int secim;
+        
         scanf("%d", &secim);
 
         switch (secim) {
         case 1: {
           char isim[50], soyisim[50], email[100];
-          printf("Enter Name: ");
+          printf("Isim giriniz: ");
           scanf("%49s", isim);
-          printf("Enter Surname: ");
+          printf("soy isim giriniz: ");
           scanf("%49s", soyisim);
-          printf("Enter Email: ");
+          printf("Email giriniz: ");
           scanf("%99s", email);
           kayit_ekle(&etkinlik_sistemi, isim, soyisim, email, file);
           break;
         }
 
         case 2: {
+
+          // isim silmek icin index kullaniyouruz
           int line_to_delete;
           do {
-            printf("Write the line number that you want to delete: ");
+            printf("silmek istediginiz indeksi yazinia: ");
             printf("Menu'ye geri dönmek için 0: ");
             scanf("%d", &line_to_delete);
 
