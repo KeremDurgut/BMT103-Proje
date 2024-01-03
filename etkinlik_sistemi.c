@@ -18,7 +18,7 @@ void veriyi_kaydet(const struct Katilimci *sistem, char *file) {
     exit(EXIT_FAILURE);
   }
   // dosyaya girilen verilerin eklenmesi.
-  fprintf(dosya, "%s,%s - %s\n", sistem->isim, sistem->soyisim, sistem->email);
+  fprintf(dosya, "%s %s - %s\n", sistem->isim, sistem->soyisim, sistem->email);
 
   fclose(dosya);// dosyayı kapat. 
 }
