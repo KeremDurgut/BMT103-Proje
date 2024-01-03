@@ -80,7 +80,7 @@ int total_lines() {
   fclose(file);
 
   // print out the total number of lines 
-  
+
   return current_line;
 }
 
@@ -108,8 +108,8 @@ void show_file(char *file_input) {
 
         printf("%d ", i); // satir numaraini print yap
         i++;
-       
-        
+
+
       }
     }
 
@@ -205,7 +205,7 @@ void etkinlik_ekleme() {
 
 
 void ana_menu() {
-  
+
   printf("\n----------------------------------------------\n");
   printf("|          Etkinlik Menu:                      |\n\n");
   printf("|       1. Etkinlik Ekle                       |\n");
@@ -241,7 +241,7 @@ void etkinlik_liste_goruntuleme() {
     fclose(etkinlikler);
   } else {
     printf("Hic bir etkinlik bulunmamaktadir\n");
-    
+
   }
 }
 
@@ -288,7 +288,7 @@ void etkinlik_sil(char *etkinlik_name) {
 
   file = fopen(filename, "w");
 
- 
+
 
   ret = remove(filename);
 
