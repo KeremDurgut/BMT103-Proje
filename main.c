@@ -1,66 +1,110 @@
-
 #include "etkinlik_sistemi.h"
 #include <stdio.h>
 
 int main() {
   struct Katilimci etkinlik_sistemi;
-  // etkinlik_sistemi.katilimci_sayisi = 0;
-
   int choice;
+
   do {
-    show_menu();
+    ana_menu();
     scanf("%d", &choice);
     getchar(); // Clear the newline from the buffer
 
     switch (choice) {
-    case 1: {
-      char isim[50], soyisim[50], email[100];
-      printf("Enter Name: ");
-      scanf("%49s", isim);
-      printf("Enter Surname: ");
-      scanf("%49s", soyisim);
-      printf("Enter Email: ");
-      scanf("%99s", email);
-      kayit_ekle(&etkinlik_sistemi, isim, soyisim, email);
+    case 1:
+      etkinlik_ekleme();
       break;
-    }
+
     case 2: {
-      int silme_turu;
-      show();
-      printf("1. isim ile kayit silmek\n");
-      printf("2. numara ile kayit silmek\n");
-      scanf("%d", &silme_turu);
+      char etkinlik_listesi[30] = "etkinlik_listesi.txt";
+      int islem;
+      etkinlik_liste_goruntuleme();
+      printf("Hangi etkinlikle işlem yapmak istiyorsunuz: ");
+      scanf("%d", &islem);
+      const char *filename = "etkinlik_listesi.txt";
+      int lineNumber = islem;
+      char lineBuffer[256];
 
-      switch (silme_turu) {
-      case 1: {
-        char isim[50], soyisim[50], email[100];
-        printf("Enter Name: ");
-        scanf("%49s", isim);
-        printf("Enter Surname: ");
-        scanf("%49s", soyisim);
-        // kayit_silme(&etkinlik_sistemi, isim, soyisim);
-        break;
+      if (copy_line_to_variable(filename, lineNumber, lineBuffer)) {
+        printf("Line %d: %s", lineNumber, lineBuffer);
+      } else {
+        printf("Line %d not found or file couldn't be opened.\n", lineNumber);
       }
-      case 2: {
-        int delete_line;
-        printf("Delete Line: ");
-        scanf("%d", &delete_line);
-        numarayla_silme(&etkinlik_sistemi, delete_line);
-        break;
 
-        break;
-      }
-      }
-    }
-    case 3:
-      show();
+      etkinlik_sil(lineBuffer);
+
+      // we have to edit this
+      delete_line(etkinlik_listesi, lineNumber);
       break;
+    }
+
+    case 3: {
+      int islem;
+      etkinlik_liste_goruntuleme();
+      printf("Hangi etkinlikle işlem yapmak istiyorsunuz: ");
+      scanf("%d", &islem);
+      const char *filename = "etkinlik_listesi.txt";
+      int lineNumber = islem;
+      char lineBuffer[256];
+
+      if (copy_line_to_variable(filename, lineNumber, lineBuffer)) {
+        printf("Line %d: %s", lineNumber, lineBuffer);
+      } else {
+        printf("Line %d not found or file couldn't be opened.\n", lineNumber);
+      }
+      int secim;
+      do {
+        show_menu(lineBuffer);
+        // int secim;
+        scanf("%d", &secim);
+
+        switch (secim) {
+        case 1: {
+          char isim[50], soyisim[50], email[100];
+          printf("Enter Name: ");
+          scanf("%49s", isim);
+          printf("Enter Surname: ");
+          scanf("%49s", soyisim);
+          printf("Enter Email: ");
+          scanf("%99s", email);
+          kayit_ekle(&etkinlik_sistemi, isim, soyisim, email, lineBuffer);
+          break;
+        }
+
+        case 2: {
+          int line_to_delete;
+          do {
+            printf("Write the line number that you want to delete: ");
+            printf("Menu'ye geri dönmek için 0: ");
+            scanf("%d", &line_to_delete);
+
+            numarayla_silme(line_to_delete, lineBuffer);
+          } while (line_to_delete != 0);
+
+          break;
+        }
+
+        case 3:
+          show(lineBuffer);
+          break;
+
+        default:
+          printf("Invalid choice. Please choose again.\n");
+          break;
+        }
+
+      } while (secim != 0);
+
+      break;
+    }
+
     case 0:
       printf("Exiting...\n");
       break;
 
     default:
       printf("Invalid choice. Please choose again.\n");
+      break;
     }
   } while (choice != 0);
 
