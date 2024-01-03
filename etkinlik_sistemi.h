@@ -8,25 +8,23 @@ struct Katilimci {
   char email[100];
 };
 
-
-void veriyi_kaydet(const struct Katilimci *sistem, char *lineBuffer);
+void veriyi_kaydet(const struct Katilimci *sistem, char *file);
 void kayit_ekle(struct Katilimci *sistem, const char *isim, const char *soyisim,
-                const char *email, char *lineBuffer);
+                const char *email, char *file);
 void kayit_iptal(struct EtkinlikKayitSistemi *sistem, const char *isim,
                  const char *soyisim);
 void katilimci_listesi_goruntule(const struct EtkinlikKayitSistemi *sistem);
-void show_menu(char *lineBuffer);
+void show_menu(char *file);
 // extras
-void numarayla_silme( int delete_line,
-                     char *lineBuffer);
-void show(char *lineBuffer);
+void numarayla_silme(int delete_line, char *file_name);
+void show_file(char *file_input);
 int total_lines();
 void main_menu();
 void ana_menu();
 
-void etkinlik_sil(char *lineBuffer);
+void etkinlik_sil(char *etkinlik_name);
 
-
+void delete_line(const char *filename, int line_number);
 
 void etkinlik_liste_goruntuleme();
 
